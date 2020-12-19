@@ -1,0 +1,18 @@
+.amcharts-input{
+    width: 25%;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.amcharts-input-bt {
+	background: transparent;
+	border: 2px solid #666666;
+    color: #666666;
+    border-radius: 4px;
+}
+
+.amcharts-input-bt:hover,
+.amcharts-input-bt:focus {
+	background: #666666;
+	color: white;
+}

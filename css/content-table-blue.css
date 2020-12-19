@@ -1,0 +1,124 @@
+.content-table-blue {
+border-collapse: collapse;
+margin: 25px 0;
+font-size: 0.3em;
+min-width: 400px;
+border-radius:5px 5px 0 0;
+overflow: hidden;
+box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+text-align: center;
+}
+
+.content-table-blue thead tr {
+background-color: #006699;
+color: #ffffff;
+text-align: center;
+}
+
+.content-table-blue th,
+.content-table-blue td {
+padding: 12px 15px;
+font-weight: bold;
+text-align: center;
+}
+
+.content-table-blue tbody tr {
+border-bottom: 1px solid #dddddd;
+font-weight: bold;
+}
+
+.content-table-blue tbody tr:nth-of-type(even) {
+background-color: #f3f3f3;
+}
+
+.content-table-blue tbody tr:last-of-type {
+border-bottom: 2px solid #006699;
+}
+
+.content-table-blue tbody tr.active-row {
+font-weight: bold;
+color: #006699;
+}
+
+@media screen and (max-width: 800px) and (orientation: landscape), screen and (max-height: 300px) {
+    .content-table-blue {
+        border-collapse: collapse;
+        margin: 7px 0;
+        font-size: 0.2em;
+        min-width: 95%;
+        border-radius: 2px 2px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .content-table-blue thead tr {
+        background-color: #006699;
+        color: #ffffff;
+          
+    }
+    
+    .content-table-blue th,
+    .content-table-blue td {
+        padding: 3px 4px;
+    }
+    
+    .content-table-blue tbody tr {
+        border-bottom: 0.3px solid #dddddd;
+        
+    }
+    
+    .content-table-blue tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+    
+    .content-table-blue tbody tr:last-of-type {
+        border-bottom: 1px solid #006699;
+    }
+    
+    .content-table-blue tbody tr.active-row {
+        color: #006699;
+    }
+    
+}
+
+@media all and (max-width: 900px) {
+    .content-table-blue {
+        border-collapse: collapse;
+        margin: 7px 0;
+        font-size: 0.3em;
+        min-width: 95%;
+        border-radius: 2px 2px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);  
+    }
+    
+    .content-table-blue thead tr {
+        background-color: #006699;
+        color: #ffffff;
+        text-align: left;
+    }
+    
+    .content-table-blue th,
+    .content-table-blue td {
+        padding: 3px 4px;
+    }
+    
+    .content-table-blue tbody tr {
+        border-bottom: 0.3px solid #dddddd;
+    }
+    
+    .content-table-blue tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+    
+    .content-table-blue tbody tr:last-of-type {
+        border-bottom: 1px solid #006699;
+    }
+    
+    .content-table-blue tbody tr.active-row {
+        color: #006699;
+    }
+    
+}
+
+
