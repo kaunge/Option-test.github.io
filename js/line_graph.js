@@ -35,52 +35,11 @@
                  'rgba(119, 191, 63, 0.5)'
              ]
          }, {
-             label: 'bs_1',
+             label: 'remain bs day',
              borderColor: '#006699',//藍色
              pointHitRadius: 0.75,
              pointRadius: 0,
              borderWidth: 1,
-             data: bs_line, //y軸
-             backgroundColor: [
-                 'rgba(0%,0%,0%,0%)'//透明
-             ]
-         }, {
-             label: 'bs_2',
-             borderColor: '#0099E5',//藍色
-             pointHitRadius: 0.75,
-             pointRadius: 0,
-             borderWidth: 1,
-             data: bs_line, //y軸
-             backgroundColor: [
-                 'rgba(0%,0%,0%,0%)'//透明
-             ]
-         }, {
-             label: 'bs_3',
-             borderColor: '#3382AA',//藍色
-             pointHitRadius: 0.75,
-             pointRadius: 0,
-             borderWidth: 1,
-             data: bs_line, //y軸
-             backgroundColor: [
-                 'rgba(0%,0%,0%,0%)'//透明
-             ]
-         }, {
-             label: 'bs_4',
-             borderColor: '#45B0E5',//藍色
-             pointHitRadius: 0.75,
-             pointRadius: 0,
-             borderWidth: 1,
-             data: bs_line, //y軸
-             backgroundColor: [
-                 'rgba(0%,0%,0%,0%)'//透明
-             ]
-         }, {
-             label: '',
-             borderColor: '#FFFFFF',//藍色
-             pointHitRadius: 0.75,
-             pointRadius: 0,
-             borderWidth: 1,
-             display: false,
              data: bs_line, //y軸
              backgroundColor: [
                  'rgba(0%,0%,0%,0%)'//透明
@@ -94,8 +53,8 @@
              fontSize: 20
          },
          legend: {
-             display: false,
-             position: 'right',
+             //display: false,
+             position: 'bottom',
              labels: {
                  //filter: function(lineChart.data.datasets[6], myChart) {
                  // Logic to remove a particular legend item goes here

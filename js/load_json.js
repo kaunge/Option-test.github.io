@@ -9,7 +9,7 @@ function func_month() {
     week_name = get_week_name()[0];
     year_name = get_week_name()[1];
     month_name = get_week_name()[2];
-    console.log(week_name)
+    //console.log(week_name)
     document.getElementById('month_0').innerHTML = year_name.toString() + '/' + month_name.toString() + '/W' + week_name.toString();
     document.getElementById('month_1').innerHTML = '-';
 
@@ -55,12 +55,15 @@ function get_week_name() {
 
         } else if (diff >= -7 && diff < 0) {
             w = 1;
-            n_day = now;
+            n_day = new Date();
             n_day.setDate(n_day.getDate() + 7);
             y = n_day.getFullYear();
             m = n_day.getMonth() + 1;
 
         }
+    }
+    if (w == 3) {
+        w = 'O'
     }
 
     return [w, y, m];

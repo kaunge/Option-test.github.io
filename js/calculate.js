@@ -606,15 +606,11 @@ function profit_and_loss_cap() { //id=pro_los_0 & id=pro_los_1，risk&profit表�
 }
 
 //涂
-function draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day) {
+function draw(x, y, bs_y) {
     lineChart.data.labels = [];
     lineChart.data.datasets[0].data = [];
     lineChart.data.datasets[1].data = [];
-    lineChart.data.datasets[2].data = [];//bs_y_1_day
-    lineChart.data.datasets[3].data = [];//bs_y_2_day
-    lineChart.data.datasets[4].data = [];//bs_y_3_day
-    lineChart.data.datasets[5].data = [];//bs_y_4_day
-    lineChart.data.datasets[6].data = [];//bs_y_5_day
+    lineChart.data.datasets[2].data = [];
 
     lineChart.data.labels = x;
 
@@ -636,35 +632,20 @@ function draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day) 
     var day = now.getDay();
 
     if (day === 4) {//禮拜四則剩餘天數為4天
-        lineChart.data.datasets[2].data = bs_y_1_day;
-        lineChart.data.datasets[3].data = bs_y_2_day;
-        lineChart.data.datasets[4].data = bs_y_3_day;
-        lineChart.data.datasets[5].data = bs_y_4_day;
-        lineChart.data.datasets[6].data.push(null);
+        lineChart.data.datasets[2].data = bs_y ;
+        lineChart.data.datasets[2].label = 'remain 4 days' ;
     } else if (day === 5 || day === 6 || day === 0) {//禮拜五、六、日則剩餘天數為3天
-        lineChart.data.datasets[2].data = bs_y_1_day;
-        lineChart.data.datasets[3].data = bs_y_2_day;
-        lineChart.data.datasets[4].data = bs_y_3_day;
-        lineChart.data.datasets[5].data.push(null);
-        lineChart.data.datasets[6].data.push(null);
+        lineChart.data.datasets[2].data = bs_y ;
+        lineChart.data.datasets[2].label = 'remain 3 days' ;
     } else if (day === 1) {//禮拜一則剩餘天數為2天
-        lineChart.data.datasets[2].data = bs_y_1_day;
-        lineChart.data.datasets[3].data = bs_y_2_day;
-        lineChart.data.datasets[4].data.push(null);
-        lineChart.data.datasets[5].data.push(null);
-        lineChart.data.datasets[6].data.push(null);
+        lineChart.data.datasets[2].data = bs_y ;
+        lineChart.data.datasets[2].label = 'remain 2 days' ;
     } else if (day === 2) {//禮拜二則剩餘天數為1天
-        lineChart.data.datasets[2].data = bs_y_1_day;
-        lineChart.data.datasets[3].data.push(null);
-        lineChart.data.datasets[4].data.push(null);
-        lineChart.data.datasets[5].data.push(null);
-        lineChart.data.datasets[6].data.push(null);
+        lineChart.data.datasets[2].data = bs_y ;
+        lineChart.data.datasets[2].label = 'remain 1 day' ;
     } else if (day === 3) {//禮拜三則剩餘天數為0天
-        lineChart.data.datasets[2].data.push(null);
-        lineChart.data.datasets[3].data.push(null);
-        lineChart.data.datasets[4].data.push(null);
-        lineChart.data.datasets[5].data.push(null);
-        lineChart.data.datasets[6].data.push(null);
+        lineChart.data.datasets[2].data = bs_y ;
+        lineChart.data.datasets[2].label = 'remain 0 day' ;
     }
 
     lineChart.update();//使線圖可以即時更新
@@ -677,21 +658,6 @@ func_month();
 setInterval('load_json_call()', 100); //反覆讀json
 setInterval('refresh_tbody_contracts(contracts_array)', 1000);//刷新右方清單按鈕
 
-function bs_day() { //得到剩餘天數
-    var remain_year_value = document.getElementById('bs_day').value;
-    if (remain_year_value === '' || remain_year_value === undefined || remain_year_value === null) { //取得remain_year，如果為空直則預設為1
-
-        return parseFloat(5 / 365)
-    } else if (parseInt(remain_year_value) < 0) {
-        alert('remain_year_value not allow be negative, so it will be 0');
-
-        return parseFloat(5 / 365)
-    } else {
-
-        return (parseFloat(remain_year_value) / 365)
-
-    }
-}
 
 var option_type = "";
 var strike = 0;
@@ -709,11 +675,12 @@ var buy_put_quote = [];
 var sell_call_quote = [];
 var sell_put_quote = [];
 
-var bs_y_1_day = [];//剩一天
-var bs_y_2_day = [];
-var bs_y_3_day = [];//剩三天
-var bs_y_4_day = [];
-var bs_y_5_day = [];//剩五天
+var bs_y = [];
+// var bs_y_1_day = [];//剩一天
+// var bs_y_2_day = [];
+// var bs_y_3_day = [];//剩三天
+// var bs_y_4_day = [];
+// var bs_y_5_day = [];//剩五天
 
 var x = [];
 var y = [];
@@ -746,13 +713,10 @@ function func_calculate(contracts_array) { //計算教練程式main
     sell_put_quote.length = 0;
     x.length = 0;
     y.length = 0;
-    //bs_y.length = 0;
+
     balance.length = 0;
-    bs_y_1_day.length = 0;
-    bs_y_2_day.length = 0;
-    bs_y_3_day.length = 0;
-    bs_y_4_day.length = 0;
-    bs_y_5_day.length = 0;
+
+    bs_y.length = 0;
 
     amount = 1; //口數
     //bs model
@@ -761,8 +725,6 @@ function func_calculate(contracts_array) { //計算教練程式main
 
     sigma = parseFloat(document.getElementById("bs_0").innerText) / 100;//臺指選擇權波動率指數
     r = parseFloat(document.getElementById("bs_1").innerText)/100;//無風險利率
-
-    //remain_year = bs_day();//到期天數
 
     for (var i = 0; i < contracts_array.length; i++) { //分配contracts_array內的個數值
         option_type = contracts_array[i][1] + "_" + contracts_array[i][2];
@@ -800,13 +762,17 @@ function func_calculate(contracts_array) { //計算教練程式main
     //bs_y.length = 0;//清空bs_y陣列
 
     paint_x_2();//描出將損益兩平點也考量後的X軸點位
+    var now = new Date();
+    var day = now.getDay();
     for (var i = 0; i < x.length; i++) { //第二次描出Y軸點位
         y.push(cash_in + cash_out(x[i])); //計算進出場後總共的資金變化
-        bs_y_1_day.push(cash_in + bs_cash_out(x[i], 1 /365)); //計算1天後到期的BS模型下進出場後總共的資金變化
-        bs_y_2_day.push(cash_in + bs_cash_out(x[i], 2 /365)); //計算2天後到期的BS模型下進出場後總共的資金變化
-        bs_y_3_day.push(cash_in + bs_cash_out(x[i], 3 /365)); //計算3天後到期的BS模型下進出場後總共的資金變化
-        bs_y_4_day.push(cash_in + bs_cash_out(x[i], 4/365)); //計算4天後到期的BS模型下進出場後總共的資金變化
-        bs_y_5_day.push(cash_in + bs_cash_out(x[i], 5/365)); //計算5天後到期的BS模型下進出場後總共的資金變化
+        
+        bs_y.push(cash_in + bs_cash_out(x[i], day /365))
+        // bs_y_1_day.push(cash_in + bs_cash_out(x[i], 1 /365)); //計算1天後到期的BS模型下進出場後總共的資金變化
+        // bs_y_2_day.push(cash_in + bs_cash_out(x[i], 2 /365)); //計算2天後到期的BS模型下進出場後總共的資金變化
+        // bs_y_3_day.push(cash_in + bs_cash_out(x[i], 3 /365)); //計算3天後到期的BS模型下進出場後總共的資金變化
+        // bs_y_4_day.push(cash_in + bs_cash_out(x[i], 4/365)); //計算4天後到期的BS模型下進出場後總共的資金變化
+        // bs_y_5_day.push(cash_in + bs_cash_out(x[i], 5/365)); //計算5天後到期的BS模型下進出場後總共的資金變化
     }
 
 
@@ -826,22 +792,24 @@ function func_calculate(contracts_array) { //計算教練程式main
         ;
         x = [10000, 12000, 14000, 16000, 18000];
         y = [0, 0, 0, 0, 0];
-        //bs_y = [null, null, null, null, null];
-        bs_y_1_day = [null, null, null, null, null];
-        bs_y_2_day = [null, null, null, null, null];
-        bs_y_3_day = [null, null, null, null, null];
-        bs_y_4_day = [null, null, null, null, null];
-        bs_y_5_day = [null, null, null, null, null];
+        bs_y = [null, null, null, null, null];
+        draw(x, y, bs_y);
+        // bs_y_1_day = [null, null, null, null, null];
+        // bs_y_2_day = [null, null, null, null, null];
+        // bs_y_3_day = [null, null, null, null, null];
+        // bs_y_4_day = [null, null, null, null, null];
+        // bs_y_5_day = [null, null, null, null, null];
         //draw(x, y, bs_y); //畫線圖
-        draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day); //畫線圖
+        //draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day); //畫線圖
+
 
     } else {
         //func_balance();
         //balance_point();//計算所有損益兩平時的X座標
         document.getElementById('pro_los_2').innerHTML = balance_text();
         profit_and_loss_cap(); //計算損益上限
-        //draw(x, y, bs_y); //畫線圖
-        draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day); //畫線圖
+        draw(x, y, bs_y); //畫線圖
+        //draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day); //畫線圖
     }
     return 0;
 }
