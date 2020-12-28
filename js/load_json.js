@@ -167,6 +167,7 @@ function load_json_index() { //讀取data_index.json
             })
             .then(function (data) {
                 document.getElementById('strike').innerHTML = data[0][0];
+                index_num = data[0][1];
 
 
             })

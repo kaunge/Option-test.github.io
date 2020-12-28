@@ -10,7 +10,7 @@ am4core.ready(function () {
 
   // Load data
   //chart.dataSource.url = "https://www.amcharts.com/wp-content/uploads/assets/stock/MSFT.csv";
-  chart.dataSource.url ="https://raw.githubusercontent.com/kaunge/Option-test/main/history.csv";
+  chart.dataSource.url ="https://raw.githubusercontent.com/kaunge/Option-test/main/json/his.csv";
   chart.dataSource.parser = new am4core.CSVParser();
   chart.dataSource.parser.options.useColumnNames = true;
   chart.dataSource.parser.options.reverse = true;
@@ -36,9 +36,9 @@ am4core.ready(function () {
   dateAxis.groupData = true;
   dateAxis.minZoomCount = 5;
 
-  // these two lines makes the axis to be initially zoomed-in
-  // dateAxis.start = 0.7;
-  // dateAxis.keepSelection = true;
+//   these two lines makes the axis to be initially zoomed-in
+//   dateAxis.start = 0.7;
+//   dateAxis.keepSelection = true;
 
   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
   valueAxis.tooltip.disabled = true;
@@ -67,33 +67,33 @@ am4core.ready(function () {
   series.name = "MSFT";
   series.defaultState.transitionDuration = 0;
 
-  // var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-  // valueAxis2.tooltip.disabled = true;
-  // // height of axis
-  // valueAxis2.height = am4core.percent(35);
-  // valueAxis2.zIndex = 3
-  // // this makes gap between panels
-  // valueAxis2.marginTop = 30;
-  // valueAxis2.renderer.baseGrid.disabled = true;
-  // valueAxis2.renderer.inside = true;
-  // valueAxis2.renderer.labels.template.verticalCenter = "bottom";
-  // valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
-  // //valueAxis.renderer.maxLabelPosition = 0.95;
-  // valueAxis2.renderer.fontSize = "0.8em"
+  var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+  valueAxis2.tooltip.disabled = true;
+  // height of axis
+  valueAxis2.height = am4core.percent(35);
+  valueAxis2.zIndex = 3
+  // this makes gap between panels
+  valueAxis2.marginTop = 30;
+  valueAxis2.renderer.baseGrid.disabled = true;
+  valueAxis2.renderer.inside = true;
+  valueAxis2.renderer.labels.template.verticalCenter = "bottom";
+  valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
+  //valueAxis.renderer.maxLabelPosition = 0.95;
+  valueAxis2.renderer.fontSize = "0.8em"
 
-  // valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
-  // valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
+  valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
+  valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
 
-  // var series2 = chart.series.push(new am4charts.ColumnSeries());
-  // series2.dataFields.dateX = "Date";
-  // series2.clustered = false;
-  // series2.dataFields.valueY = "Volume";
-  // series2.yAxis = valueAxis2;
-  // series2.tooltipText = "{valueY.value}";
-  // series2.name = "Series 2";
-  // // volume should be summed
-  // series2.groupFields.valueY = "sum";
-  // series2.defaultState.transitionDuration = 0;
+  var series2 = chart.series.push(new am4charts.ColumnSeries());
+  series2.dataFields.dateX = "Date";
+  series2.clustered = false;
+  series2.dataFields.valueY = "Volume";
+  series2.yAxis = valueAxis2;
+  series2.tooltipText = "{valueY.value}";
+  series2.name = "Series 2";
+  // volume should be summed
+  series2.groupFields.valueY = "sum";
+  series2.defaultState.transitionDuration = 0;
 
   chart.cursor = new am4charts.XYCursor();
   chart.cursor.behavior = "panX";

@@ -399,101 +399,6 @@ function balance_text() {//將所有損益兩平點的HTML碼打出來
     return a;
 }
 
-//跳過用X、Y軸畫出圖形
-
-/*
-//跳過畫出損益兩平點的部分
-function balance_point(){//計算所有損益兩平時的X座標
-    console.log(" balance_point");
-    document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+'balance'+'</font>';
-	
-    for (var i = 0; i < y.length - 1; i++){//判斷除了最後一項之外，是否有損益兩平點
-        if (y[i] * y[i + 1] < 0){
-            console.log("損益兩平點在2", x[i], "與", x[i + 1], "之間");																							
-            document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+x[i].toString()+'&'+x[i + 1].toString()+'</font>';
-	
-        }else if (y[i] === 0){
-            console.log("損益兩平點1 = ", x[i]);
-            document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+x[i].toString()+'</font>';
-        	
-        }
-    }
-    if (y[y.length - 1] === 0){//判斷最後一項是否為損益兩平點
-        console.log("損益兩平點3 = ", x[y.length - 1]);
-    	
-        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+x[y.length - 1].toString()+'</font>';
-    }
-    if (document.getElementById('pro_los_2').textContent==='balance'){//當圖上找不到損益兩平點時，向左右延伸找損益兩平點
-        var i = 0;
-        console.log('uuuuu');
-        if(y[y.length - 1] > y[y.length - 2] & y[y.length - 1] < 0){
-            console.log('hhhhh');
-                            do{
-                                var test_y = func_cash_in() + cash_out(x[x.length - 1] + i + 1);
-                            var test_front_y = func_cash_in() + cash_out(x[x.length - 1] + i);
-                                if (test_y === 0){
-                                        console.log("損益兩平點4 = ", x[x.length - 1] + i + 1);	
-                                            	
-                        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[x.length - 1] + i + 1).toString()+'</font>';
-                            } else if (test_y * test_front_y < 0){
-                                console.log("損益兩平點在5", x[x.length - 1] + i, "與", x[x.length - 1] + i + 1, "之間");
-                    	
-                        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[x.length - 1] + i).toString()+'&'+(x[x.length - 1] + i + 1).toString()+'</font>';									
-                                }
-                            i++;
-                        } while (test_y < 0);		
-        } else if (y[y.length - 1] < y[y.length - 2] & y[y.length - 1] > 0){
-            console.log('ttttt');
-                do{
-                            var test_y = func_cash_in() + cash_out(x[x.length - 1] + i + 1);
-                        var test_front_y = func_cash_in() + cash_out(x[x.length - 1] + i);
-                        if (test_y === 0){
-                                    console.log("損益兩平點6 = ", x[x.length - 1] + i + 1);								
-                    document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[x.length - 1] + i + 1).toString()+'</font>';
-                                } else if (test_y * test_front_y < 0){
-                                    console.log("損益兩平點在7", x[x.length - 1] + i, "與", x[x.length - 1] + i + 1, "之間");
-                        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[x.length - 1] + i).toString()+'&'+(x[x.length - 1] + i + 1).toString()+'</font>';													
-                                }
-                                i++;
-                        } while (test_y > 0);
-        } 
-        var i = 0;
-        if (y[0] > y[1] & y[0] < 0){
-            console.log('rrrrrrr');
-            do{
-                            var test_y = func_cash_in() + cash_out(x[0] - i - 1);
-                                    var test_front_y = func_cash_in() + cash_out(x[0] - i);
-                                    if (test_y === 0){
-                                        console.log("損益兩平點8 = ", x[0] - i - 1);								
-                        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[0] - i - 1).toString()+'</font>';
-                        } else if (test_y * test_front_y < 0){
-                                            console.log("損益兩平點在9", x[0] - i - 1, "與", x[0] - i, "之間");
-                        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[0] - i - 1).toString()+'&'+(x[0] - i).toString()+'</font>';									
-                                    }
-                                    i++;
-                                } while (test_y < 0);
-        } else if (y[0] < y[1] & y[0] > 0){
-            console.log('wwwwww');
-            do{
-                                    var test_y = func_cash_in() + cash_out(x[0] - i - 1);
-                                    var test_front_y = func_cash_in() + cash_out(x[0] - i);
-                            if (test_y === 0){
-                                        console.log("損益兩平點10 = ", x[0] - i - 1);								
-                        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[0] - i - 1).toString()+'</font>';
-                        } else if (test_y * test_front_y < 0){
-                                            console.log("損益兩平點在11", x[0] - i - 1, "與", x[0] - i, "之間");
-                        document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+(x[0] - i - 1).toString()+'&'+(x[0] - i).toString()+'</font>';										
-                                    }
-                                    i++;
-                            } while (test_y > 0);
-        } else {
-                    console.log("無損益兩平點12")
-                document.getElementById('pro_los_2').innerHTML = '<font size="2" color="black">'+'No balance'+'</font>';
-        }
-    }
-}
-*/
-
 function bs_cash_out(i, remain_year) {
     var a = 0;
     for (var j = 0; j < buy_call; j++) {
@@ -606,13 +511,16 @@ function profit_and_loss_cap() { //id=pro_los_0 & id=pro_los_1，risk&profit表�
 }
 
 //涂
-function draw(x, y, bs_y) {
+function draw(x, y, bs_y, line_n) {
     lineChart.data.labels = [];
     lineChart.data.datasets[0].data = [];
     lineChart.data.datasets[1].data = [];
     lineChart.data.datasets[2].data = [];
-
     lineChart.data.labels = x;
+
+    lineChart_n.data.labels = [];
+    lineChart_n.data.datasets[0].data = line_n;
+    lineChart_n.data.labels = x;    
 
     for (var i = 0; i < x.length; i++) {
         if (y[i] < 0) {
@@ -626,7 +534,7 @@ function draw(x, y, bs_y) {
         }
     }
 
-
+    //draw(x, y, bs_y, line_n);
     //判斷今天是星期幾並依照剩餘天數把bs寫進去
     var now = new Date();
     var day = now.getDay();
@@ -650,14 +558,25 @@ function draw(x, y, bs_y) {
 
     lineChart.update();//使線圖可以即時更新
     lineChart.resize();//重設線圖
+
+    lineChart_n.update();//使線圖可以即時更新
+    lineChart_n.resize();//重設線圖
 }
+
+function pdf(x,mean,std){//計算機率密度函數      
+    var pdf = (1 / (std * Math.pow(2*Math.PI,0.5))) * Math.pow(Math.E,(Math.pow(x - mean,2) / (-2 * Math.pow(std,2))));
+    //pdf = Math.round(pdf * 10000) / 10000;
+    pdf = pdf*10000;
+    return pdf;
+}
+
+
 
 //main
 var mytime = setInterval('myTimer()', 1000);
 func_month();
 setInterval('load_json_call()', 100); //反覆讀json
 setInterval('refresh_tbody_contracts(contracts_array)', 1000);//刷新右方清單按鈕
-
 
 var option_type = "";
 var strike = 0;
@@ -676,23 +595,18 @@ var sell_call_quote = [];
 var sell_put_quote = [];
 
 var bs_y = [];
-// var bs_y_1_day = [];//剩一天
-// var bs_y_2_day = [];
-// var bs_y_3_day = [];//剩三天
-// var bs_y_4_day = [];
-// var bs_y_5_day = [];//剩五天
 
 var x = [];
 var y = [];
 var amount = 1; //口數
 
-//下面三行預設，等待刪除
-var r = 0.01;//臺指選擇權波動率指數
-var sigma = 0.4;//無風險利率
-//var remain_year = 0.001; //設置到期天數
+var r = 0.01;
+var sigma = 0.4;
 
 var balance = [];
 
+var index_num = 14350;
+var line_n=[];
 function func_calculate(contracts_array) { //計算教練程式main
 
     option_type = "";
@@ -725,7 +639,7 @@ function func_calculate(contracts_array) { //計算教練程式main
 
     sigma = parseFloat(document.getElementById("bs_0").innerText) / 100;//臺指選擇權波動率指數
     r = parseFloat(document.getElementById("bs_1").innerText)/100;//無風險利率
-
+    line_n.length = 0;
     for (var i = 0; i < contracts_array.length; i++) { //分配contracts_array內的個數值
         option_type = contracts_array[i][1] + "_" + contracts_array[i][2];
         strike = parseInt(contracts_array[i][3]);
@@ -793,7 +707,8 @@ function func_calculate(contracts_array) { //計算教練程式main
         x = [10000, 12000, 14000, 16000, 18000];
         y = [0, 0, 0, 0, 0];
         bs_y = [null, null, null, null, null];
-        draw(x, y, bs_y);
+        line_n = [0, 0, 0, 0, 0];//normal distrubution
+        draw(x, y, bs_y, line_n);
         // bs_y_1_day = [null, null, null, null, null];
         // bs_y_2_day = [null, null, null, null, null];
         // bs_y_3_day = [null, null, null, null, null];
@@ -808,8 +723,17 @@ function func_calculate(contracts_array) { //計算教練程式main
         //balance_point();//計算所有損益兩平時的X座標
         document.getElementById('pro_los_2').innerHTML = balance_text();
         profit_and_loss_cap(); //計算損益上限
-        draw(x, y, bs_y); //畫線圖
+        var mean = index_num;
+        var std = 100;//假設標準差100
+        for(var i=0;i< x.length;i++){
+            line_n.push(pdf(parseInt(x[i]),mean,std));
+        }
+        console.log(mean);
+        console.log(std);
+        console.log(line_n);
+        draw(x, y, bs_y,line_n); //畫線圖
+        
         //draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day); //畫線圖
     }
     return 0;
-}
+};
