@@ -115,15 +115,15 @@ function load_json_call(str) { //讀取data_call.json並建立表格
 
                     for (var i = 0; i < row_len; i++) {
 
-                        document.getElementById('bt_call_sell_price_' + i.toString()).innerHTML = data_call.sell_price[i];
-                        document.getElementById('bt_call_buy_price_' + i.toString()).innerHTML = data_call.buy_price[i];
+                        document.getElementById('bt_call_sell_price_' + i.toString()).innerHTML = data_call.buy_price[i];
+                        document.getElementById('bt_call_buy_price_' + i.toString()).innerHTML = data_call.sell_price[i];
                         document.getElementById('bt_code_' + i.toString()).innerHTML = "<font  color='white' border=1>" + data_call.code_num[i] + "</font>";
 
                     }
                 } else {
                     for (var i = 0; i < row_len; i++) {
-                        document.getElementById('bt_call_sell_price_' + i.toString()).innerHTML = data_call.sell_price[i];
-                        document.getElementById('bt_call_buy_price_' + i.toString()).innerHTML = data_call.buy_price[i];
+                        document.getElementById('bt_call_sell_price_' + i.toString()).innerHTML = data_call.buy_price[i];
+                        document.getElementById('bt_call_buy_price_' + i.toString()).innerHTML = data_call.sell_price[i];
                         document.getElementById('bt_code_' + i.toString()).innerHTML = "<font  color='white' border=1>" + data_call.code_num[i] + "</font>";
                     }
                 }
@@ -151,8 +151,8 @@ function load_json_put() { //讀取data_put.json
             .then(function (data) {
                 var data_put = data; //完整的data_call.json						
                 for (var i = 0; i < row_len; i++) {
-                    document.getElementById('bt_put_buy_price_' + i.toString()).innerHTML = data_put.buy_price[i];
-                    document.getElementById('bt_put_sell_price_' + i.toString()).innerHTML = data_put.sell_price[i];
+                    document.getElementById('bt_put_buy_price_' + i.toString()).innerHTML = data_put.sell_price[i];
+                    document.getElementById('bt_put_sell_price_' + i.toString()).innerHTML = data_put.buy_price[i];
                 }
             })
 }

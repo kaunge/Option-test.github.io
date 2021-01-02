@@ -186,7 +186,7 @@ http://www.templatemo.com/tm-483-lumino
                             </table>
                             <div>
 
-                                <button class="btn tm-light-red-bordered-btn tm-news-link"
+                                <button class="btn tm-light-red-bordered-btn tm-news-link btn-clear-all"
                                     onclick="ClearAll(contracts_array,k)" type="button">clear all</button>
 
 
@@ -214,12 +214,29 @@ http://www.templatemo.com/tm-483-lumino
                                     </tbody>
                                 </table>
                                 <div>
-                                    <canvas id="myChart_n" style="width:50%;height:70%"></canvas>
-                                    <canvas id="myChart" style="width:50%;height:70%"></canvas>                                    
+                                    <canvas id="myChart" style="width:50%;height:70%"></canvas>  
+                                    <canvas id="myChart_n" style="width:50%;height:70%"></canvas>                                                                    
                                 </div>
 
                             </div>
-                            
+                            <table class="content-table-blue">
+                                <thead>
+                                    <tr>
+                                        <td>exp(點)</td>
+                                        <td id='Standard Deviation(days)'>Standard Deviation(days)</td>
+                                    </tr>
+                                </thead>
+                                <tbody id='bs'>
+                                    <tr class="active-row">
+                                        <td id='exp'>
+                                            <font size="2">exp_value</font>
+                                        </td>
+                                        <td id='std'>
+                                            <font size="2">std</font>
+                                        </td>                                  
+                                    </tr>
+                                </tbody>
+                            </table>
 
                             <table class="content-table-blue">
                                 <thead>
@@ -227,19 +244,16 @@ http://www.templatemo.com/tm-483-lumino
                                         <!-- <td>臺指選擇權波動率指數(%)</td> -->
                                         <td>VIXTWN(%)</td>
                                         <td>活期存款年利率(%)</td>
-
                                     </tr>
                                 </thead>
                                 <tbody id='bs'>
                                     <tr class="active-row">
-
                                         <td id='bs_0'>
                                             <font size="2">17.22</font>
                                         </td>
                                         <td id='bs_1'>
                                             <font size="2">0.04</font>
-                                        </td>
-                                    
+                                        </td>                                  
                                     </tr>
                                 </tbody>
                             </table>

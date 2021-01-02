@@ -17,9 +17,10 @@
     <p id='testcdf'>testcdf</p>
     <p>pdf=</p>
     <p id='testpdf'>testpdf</p>
+    <button id='bt' onclick="diff()">diff</button>
     <script>
         //z table [0~30][0~9],z between 0~3.5
-        val = [
+        var val = [
             [0.50000, 0.50399, 0.50798, 0.51197, 0.51595, 0.51994, 0.52392, 0.52790, 0.53188, 0.53586],
             [0.53983, 0.54380, 0.54776, 0.55172, 0.55567, 0.55966, 0.56360, 0.56749, 0.57142, 0.57535],
             [0.57926, 0.58317, 0.58706, 0.59095, 0.59483, 0.59871, 0.60257, 0.60642, 0.61026, 0.61409],
@@ -55,36 +56,71 @@
             [0.99931, 0.99934, 0.99936, 0.99938, 0.99940, 0.99943, 0.99944, 0.99946, 0.99948, 0.99950],
             [0.99952, 0.99953, 0.99955, 0.99957, 0.99958, 0.99960, 0.99961, 0.99962, 0.99964, 0.99965],
             [0.99966, 0.99968, 0.99969, 0.99970, 0.99971, 0.99972, 0.99973, 0.99974, 0.99975, 0.99976],
-            [0.99977, 0.99978, 0.99978, 0.99979, 0.99980, 0.99981, 0.99981, 0.99982, 0.99983, 0.99983]
+            [0.99977, 0.99978, 0.99978, 0.99979, 0.99980, 0.99981, 0.99981, 0.99982, 0.99983, 0.99983],
+            [0.99984, 0.99985, 0.99985, 0.99986, 0.99986, 0.99987, 0.99987, 0.99988, 0.99988, 0.99989],
+            [0.99989, 0.99990, 0.99990, 0.99990, 0.99991, 0.99991, 0.99992, 0.99992, 0.99992, 0.99992],
+            [0.99993, 0.99993, 0.99993, 0.99994, 0.99994, 0.99994, 0.99994, 0.99995, 0.99995, 0.99995],
+            [0.99995, 0.99995, 0.99996, 0.99996, 0.99996, 0.99996, 0.99996, 0.99996, 0.99997, 0.99997],
+            [0.99997, 0.99997, 0.99997, 0.99997, 0.99997, 0.99997, 0.99998, 0.99998, 0.99998, 0.99998]
         ];
         //累加分配函數cdf、機率質量函數pdf
         function ztop() {
-            var mean = parseFloat(document.getElementById('mean').value);
             var x = parseFloat(document.getElementById('x').value);
-            var std = parseFloat(document.getElementById('std').value);
+            var mean = parseFloat(document.getElementById('mean').value);
+            var std = parseFloat(document.getElementById('std').value).toPrecision(12);
             var z = (x - mean) / std;
-            var abs_z = Math.round(Math.abs(z) * 100) / 100,
-                f_z = parseInt(abs_z * 10),
-                s_z = ((abs_z * 100).toString())[(abs_z * 100).toString().length - 1],
-                cdf = 0;
-            console.log(z);
-            console.log(abs_z);
-            console.log(f_z);
-            console.log(s_z);
+            var abs_z = Math.round(Math.abs(z) * 100) / 100;
+            var f_z = parseInt(abs_z * 10);
+            //var s_z = parseFloat(((abs_z*100)).toString())[(abs_z*100).toString().length - 1];
+            var s_z = 0
+            if (abs_z.toString().length === 4) {
+                s_z = parseInt(abs_z.toString()[abs_z.toString().length - 1]);
+            } else{
+                s_z = 0;
+            }
+            var cdf = 0;
+            console.log('t=', abs_z.toString().length);
+            //15087.2 14687.7
+            console.log('z=', z);
+            console.log('abs_z=', abs_z);
+            console.log('f_z=', f_z);
+            console.log('s_z=', s_z);
+
             if (z >= 0) {
                 cdf = val[f_z][s_z];
             } else {
-                cdf = Math.round((1 - val[f_z][s_z]) * 10000) / 10000;
+                cdf = parseFloat(1 - val[f_z][s_z]);
             }
 
-            var pdf = (1/(std*Math.pow(2*Math.PI,0.5))) * Math.pow(Math.E,-0.5*z*z);
-            pdf = Math.round(pdf * 10000) / 10000;
-            console.log(pdf);
+            var pdf = (1 / (std * Math.pow(2 * Math.PI, 0.5))) * Math.pow(Math.E, -0.5 * z * z);
 
-            document.getElementById('testcdf').innerHTML = cdf;
+            console.log('cdf=', cdf);
+            console.log('1-cdf=', Math.abs(1 - cdf))
+            console.log('pdf=', pdf);
+
+            document.getElementById('testcdf').innerHTML = Math.round(cdf * 100000) / 100000;
             document.getElementById('testpdf').innerHTML = pdf;
             return [pdf, cdf];
         }
+
+        function diff() {
+            var dlist = [];
+            for (var i = 0; i < 39; i++) {
+                for (var j = 0; j < 9; j++) {
+                    d = Math.round((1 - val[i + 1][j + 1]) * 100000) / 100000;
+                    console.log(d);
+                    dlist.push(d);
+                    ;
+                }
+            }
+
+            console.log(dlist);
+            console.log(Math.round((0.99999 - 0.99997) * 100000) / 100000);
+
+        }
+
+
+
 
     </script>
 </body>

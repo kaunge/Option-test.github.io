@@ -124,6 +124,8 @@ let lineChart = new Chart(myChart, {
 window.addEventListener('resize', function () {
     lineChart.resize();
 })
+
+
 //normal_line_graph
 //線圖
 var line_x = [10000, 12000, 14000, 16000, 18000];
@@ -143,6 +145,17 @@ let lineChart_n = new Chart(myChart_n, {
             data: line_n, //y軸
             backgroundColor: [
                 'rgba(0, 102, 153, 0.5)',
+            ],
+            borderColor: '#006699',
+            borderWidth: 1,
+            pointHitRadius: 0.75,
+            pointRadius: 0,
+
+        },{
+            label: 'probability',
+            data: line_n, //y軸
+            backgroundColor: [
+                'rgba(0, 102, 153, 0.7)',
             ],
             borderColor: '#006699',
             borderWidth: 1,
@@ -212,7 +225,7 @@ let lineChart_n = new Chart(myChart_n, {
                 display:true,
                 scaleLabel:{
                     display:true,
-                    labelString:'probability(%)'
+                    labelString:'probability'
                 },
                 tick: {
                     stepSize: 500,
