@@ -51,6 +51,8 @@ def get_week_name():
         diff = (datetime.strptime(date_list[i],'%Y-%m-%d')-now ).days
         if diff >=0 and diff<7:
             w = i+1
+            y=now.strftime('%Y')
+            m=now.strftime('%m')
         elif diff <0 and diff >= -7:
             w = 1          
             y = (now+timedelta(days=7)).strftime('%Y')
@@ -89,11 +91,9 @@ def func_creat_data(index_num):
                 code_num.append(str(index_name))
             else:
                 pass
-        print(code_name_call)
         
-        if week_name == 'O':
-            week_name = 3
-        
+        print(contracts_call)
+              
         #近月會沒有資料
         if len(contracts_call) != 0  and len(contracts_put) != 0:
             snapshots_call = api.snapshots(contracts_call)#擷取call data
@@ -141,12 +141,13 @@ def index_subscribe():
     #month_after = ((now + relativedelta(months=1)).month)#取往後月份
     year_name = str(get_week_name()[1])
     month_name = get_week_name()[2]
+    
     if int(month_name)+1 > 12:
         month_name = 1
         year_name = str(int(year_name)+1)
         
     
-    api.quote.subscribe(api.Contracts.Options[("TXO"+str(14000)+month_put_dict[int(month_name)]+year_name[3])], quote_type=sj.constant.QuoteType.BidAsk)
+    api.quote.subscribe(api.Contracts.Options[("TXO"+str(15200)+month_put_dict[int(month_name)]+year_name[3])], quote_type=sj.constant.QuoteType.BidAsk)
     
     
     @api.quote.on_quote
@@ -172,9 +173,6 @@ def index_subscribe():
         with open("C:/Users/USER/Desktop/project/json/data_index.json",'a') as f2:
             f2.write("'")
         '''
-
-        
-
         
 #main
 import shioaji as sj
@@ -186,7 +184,7 @@ import calendar
 
 api=0#登入用
 index_now = 0#目前加權指數
-index_num = 14000#50級距加權指數
+index_num = 15200#50級距加權指數
 table_call_name ="" #資料庫裡的call table
 table_put_name = ""#資料庫裡的put table
 
@@ -204,10 +202,16 @@ month_put_dict = {
 
 login()#登入
 time.sleep(10)
-for i in range(300):
+while True:
     index_subscribe()#訂閱報價跟建立json
     func_creat_data(index_num)#建立資料庫並轉成.json格式
     time.sleep(0.01)
+
+
+# In[ ]:
+
+
+print(index_num)
 
 
 # In[ ]:

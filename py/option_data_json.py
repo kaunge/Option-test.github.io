@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[17]:
+# In[2]:
 
 
 #LOGIN
@@ -208,4 +208,20 @@ time.sleep(10)
 index_subscribe()#訂閱報價跟建立json
 time.sleep(10)
 func_creat_data(index_num)#建立資料庫並轉成.json格式
+
+
+# In[21]:
+
+
+contracts = [api.Contracts.Options['TX216150A1']]
+snapshots = api.snapshots(contracts)
+df = pd.DataFrame(snapshots)
+df.ts = pd.to_datetime(df.ts)
+df
+
+
+# In[ ]:
+
+
+
 
