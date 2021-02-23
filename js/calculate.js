@@ -89,25 +89,23 @@ function addHtmlTableRow(contracts_array, k) {
 
 //清除特定row	
 function removeSelectedRow(delobject) {
-
     var table = document.getElementById("tbody_contracts");
-
     contracts_array.splice(delobject.name, 1) //將第x個位置刪掉，處理資料庫
-
     document.getElementById('tbody_contracts').deleteRow(delobject.name); //刪除欄位row
-
+    k = document.getElementById("tbody_contracts").rows.length; //讓k照著順序加
     for (var i = 0; i < table.rows.length; i++) { //重新分配id and name
         var reset_del = document.getElementById('tbody_contracts').rows[i].cells[6].firstChild;
         reset_del.setAttribute('id', 'del_' + i.toString());
         reset_del.setAttribute('name', i.toString());
         var reset_amount = document.getElementById('tbody_contracts').rows[i].cells[5].firstChild;
-        reset_amount.setAttribute('id', 'amount_' + i.toString());
-
-
+        reset_amount.setAttribute('id', 'amount_' + i.toString());       
     }
-    k = document.getElementById("tbody_contracts").rows.length; //讓k照著順序加
-
-
+    for(var i=0;i<k;i++){
+        contracts_array[i][0]=i+1;
+        var reset_item = document.getElementById('tbody_contracts').rows[i].cells[0];
+        reset_item.innerHTML = i+1;
+    }
+    
     if (contracts_array.length == 0) { //如果單子表格為0則將損益表格恢復原狀
         document.getElementById('pro_los_0').innerHTML = "<font size='2' color='green'>risk</font>";
         document.getElementById('pro_los_1').innerHTML = "<font size='2' color='red'>benefit</font>";

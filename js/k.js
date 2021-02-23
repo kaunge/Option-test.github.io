@@ -10,7 +10,7 @@ am4core.ready(function () {
 
   // Load data
   //chart.dataSource.url = "https://www.amcharts.com/wp-content/uploads/assets/stock/MSFT.csv";
-  chart.dataSource.url ="https://raw.githubusercontent.com/kaunge/Option-test/main/json/his.csv";
+  chart.dataSource.url ="https://raw.githubusercontent.com/kaunge/option-tech/main/json/history.csv";
   chart.dataSource.parser = new am4core.CSVParser();
   chart.dataSource.parser.options.useColumnNames = true;
   chart.dataSource.parser.options.reverse = true;

@@ -25,11 +25,9 @@ def login():
 #取得當周數跟年月日
 def get_week_name():
     now = datetime.now()
-   
     y=int(now.strftime('%Y'))
     m=int(now.strftime('%m'))
-    d = int(now.strftime('%d'))
-
+    
     #當月資訊
     this_month_start = datetime(y, m, 1)#當月1號
     this_month_end = datetime(y, m, calendar.monthrange(y, m)[1])#當月最後一天
@@ -57,17 +55,17 @@ def get_week_name():
             w = 1          
             y = (now+timedelta(days=7)).strftime('%Y')
             m = (now+timedelta(days=7)).strftime('%m')
-            d = (now+timedelta(days=7)).strftime('%d')
+            
         elif diff >7:
             continue
             
-    return w,  y, m ,d 
+    return w,  str(y), int(m)
 
 def func_creat_data(index_num):
     for i in range(1):#取幾個月
-        week_name =  get_week_name()[0]
-        year_name = str(get_week_name()[1])
-        month_name = get_week_name()[2]
+        week_name, year_name, month_name=  get_week_name()
+        #year_name = str(get_week_name()[1])
+        #month_name = get_week_name()[2]
 
         
         month_call = month_call_dict[int(month_name)]#call的月份代號
@@ -92,7 +90,7 @@ def func_creat_data(index_num):
             else:
                 pass
         
-        print(contracts_call)
+        #print(contracts_call)
               
         #近月會沒有資料
         if len(contracts_call) != 0  and len(contracts_put) != 0:
@@ -138,30 +136,16 @@ def func_creat_data(index_num):
             pass
 #訂閱報價
 def index_subscribe():
-    #month_after = ((now + relativedelta(months=1)).month)#取往後月份
-    year_name = str(get_week_name()[1])
-    month_name = get_week_name()[2]
-    
-    if int(month_name)+1 > 12:
-        month_name = 1
-        year_name = str(int(year_name)+1)
-        
-    
-    api.quote.subscribe(api.Contracts.Options[("TXO"+str(15200)+month_put_dict[int(month_name)]+year_name[3])], quote_type=sj.constant.QuoteType.BidAsk)
-    
-    
+    api.quote.subscribe(api.Contracts.Indexs.TSE.TSE001, quote_type='tick')  
     @api.quote.on_quote
     def quote_callback(topic: str, quote: dict):
         #print(f"Topic: {topic}, Quote: {quote}")
-        global index_now, index_num, df_index_data
-        
-        index_now = quote["TargetKindPrice"]#目前加權指數
-        
+        index_now = quote["Close"]#目前加權指數
+        #print(index_now)
         index_num = round(int(index_now),-1)
         if index_num % 50 != 0 :
             index_num = index_num - index_num % 50
  
-
         df_index_data = pd.DataFrame([index_now,index_num])
         df_index_data.to_json (r"C:/xampp/htdocs/project/json/data_index.json")
         '''
@@ -184,7 +168,7 @@ import calendar
 
 api=0#登入用
 index_now = 0#目前加權指數
-index_num = 15200#50級距加權指數
+index_num = 16000#50級距加權指數
 table_call_name ="" #資料庫裡的call table
 table_put_name = ""#資料庫裡的put table
 
@@ -206,12 +190,6 @@ while True:
     index_subscribe()#訂閱報價跟建立json
     func_creat_data(index_num)#建立資料庫並轉成.json格式
     time.sleep(0.01)
-
-
-# In[ ]:
-
-
-print(index_num)
 
 
 # In[ ]:

@@ -71,7 +71,6 @@ function get_week_name() {
 //T字帳
 //讀取.json
 function load_json_call(str) { //讀取data_call.json並建立表格
-
     var url_str = (document.getElementById("month").value)[0] + (document.getElementById("month").value)[1] + (document.getElementById("month").value)[3];
     var url_call = 'json/TX' + url_str + '.json';
     var row_len = document.getElementById("t_table").rows.length; //左邊表格長度
@@ -136,9 +135,6 @@ function load_json_call(str) { //讀取data_call.json並建立表格
 
 function load_json_put() { //讀取data_put.json
 
-    //ar url_str = (document.getElementById("month").value)[0]+(document.getElementById("month").value)[2] + (document.getElementById("month").value)[3];
-    //var url_put = "json/TX" + url_str + ".json";
-    //var url_put = 'json/TX1X0.json';
     var url_str = (document.getElementById("month").value)[0] + (document.getElementById("month").value)[2] + (document.getElementById("month").value)[3];
     var url_put = 'json/TX' + url_str + '.json';
     var row_len = document.getElementById("t_table").rows.length; //左邊表格長度

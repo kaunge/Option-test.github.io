@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>radar</title>
+	<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+	<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+	<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+
+<body>
+	<div class="wrapper" style="max-width: 800px; margin: auto">
+		<canvas id="radar-chart"></canvas>
+	</div>
+	<!-- <canvas id="radar-chart" width="600" height="400"></canvas> -->
+	<script>
+		new Chart(document.getElementById("radar-chart"), {
+			type: 'radar',
+			data: {
+				labels: ["衝多", "突破多", "盤整", "突破空", "衝空"],
+				datasets: [
+					// {
+					// 	label: "1950",
+					// 	fill: true,
+					// 	backgroundColor: "rgba(179,181,198,0.2)",
+					// 	borderColor: "rgba(179,181,198,1)",
+					// 	pointBorderColor: "#fff",
+					// 	pointBackgroundColor: "rgba(179,181,198,1)",
+					// 	data: [8.77, 55.61, 21.69, 6.62, 6.82]
+					// },
+					{
+						//label: "2050",
+						fill: true,
+						backgroundColor: "rgba(255,99,132,0.2)",
+						borderColor: "rgba(255,99,132,1)",
+						pointBorderColor: "#fff",
+						pointBackgroundColor: "rgba(255,99,132,1)",
+						pointBorderColor: "#fff",
+						data: [50.48, 76.6, 37.61, 38.06, 64.45]
+					}
+				]
+			},
+			options: {
+				title: {
+					display: true,
+					fontSize: 30,
+					text: '趨勢判斷(%)'			
+				},
+				legend: {
+					display:true,
+					labels: {					
+						fontSize: 30,
+						fontColor: 'black'
+					}
+				},
+				
+
+			}
+
+		});
+	</script>
+</body>
+
+</html>
