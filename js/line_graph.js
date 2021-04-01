@@ -35,7 +35,7 @@ let lineChart = new Chart(myChart, {
                 'rgba(119, 191, 63, 0.5)'
             ]
         }, {
-            label: 'remain bs day' ,
+            label: 'BS(remain days)' ,
             borderColor: '#006699',//藍色
             pointHitRadius: 0.75,
             pointRadius: 0,

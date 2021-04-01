@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 #LOGIN
@@ -161,8 +161,10 @@ def index_subscribe():
       
         
         index_num = round(int(index_now),-1)
-        if index_num % 50 != 0 :
-            index_num = index_num - index_num % 50
+        if index_num % 50 >= 25:
+            index_num+=50-(index_num%50)
+        else:
+            index_num-=index_num%50
  
 
         df_index_data = pd.DataFrame([index_now,index_num])

@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,19 +10,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"
         integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw=="
         crossorigin="anonymous"></script>
-
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-
     <script src="js/jquery-1.11.3.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
     <meta http-equiv="Expires" content="0" />
-
     <title>option tech</title>
-
-
     <!--
 Lumino Theme
 http://www.templatemo.com/tm-483-lumino
@@ -40,12 +33,12 @@ http://www.templatemo.com/tm-483-lumino
     <link rel="stylesheet" href="css/templatemo-style.css">
     <link rel="stylesheet" href="css/content-table.css">
     <link rel="stylesheet" href="css/content-table-blue.css">
-
+    <!-- footer -->
+    <link rel="stylesheet" href="css/footer.css">
     <!-- Resources -->
     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -53,7 +46,6 @@ http://www.templatemo.com/tm-483-lumino
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
           <![endif]-->
 </head>
-
 <body id="top" class="home" onload='load_json_call()'>
     <div class="container-fluid">
         <div class="row">
@@ -96,10 +88,8 @@ http://www.templatemo.com/tm-483-lumino
                         <p class="tm-intro-text" id="time">time</p>
                     </div>
                 </section>
-
             </div>
         </div>
-
         <div class="row gray-bg">
             <div id="tm-section-2" class="tm-section">
                 <div class="tm-container tm-container-wide">
@@ -185,11 +175,8 @@ http://www.templatemo.com/tm-483-lumino
                                 </tbody>
                             </table>
                             <div>
-
                                 <button class="btn tm-light-red-bordered-btn tm-news-link btn-clear-all"
                                     onclick="ClearAll(contracts_array,k)" type="button">clear all</button>
-
-
                                 <table class="content-table-blue">
                                     <thead>
                                         <tr>
@@ -200,7 +187,6 @@ http://www.templatemo.com/tm-483-lumino
                                     </thead>
                                     <tbody id='pro_los'>
                                         <tr class="active-row">
-
                                             <td id='pro_los_0'>
                                                 <font size="2" color='green'>risk</font>
                                             </td>
@@ -217,7 +203,6 @@ http://www.templatemo.com/tm-483-lumino
                                     <canvas id="myChart" style="width:50%;height:70%"></canvas>  
                                     <canvas id="myChart_n" style="width:50%;height:70%"></canvas>                                                                    
                                 </div>
-
                             </div>
                             <table class="content-table-blue">
                                 <thead>
@@ -237,7 +222,6 @@ http://www.templatemo.com/tm-483-lumino
                                     </tr>
                                 </tbody>
                             </table>
-
                             <table class="content-table-blue">
                                 <thead>
                                     <tr>
@@ -256,20 +240,39 @@ http://www.templatemo.com/tm-483-lumino
                                         </td>                                  
                                     </tr>
                                 </tbody>
-                            </table>
-                            
+                            </table> 
                         </div>
                     </div>
                     <script src="js/line_graph.js"></script>
                     <script src="js/load_json.js"></script>
                     <script src="js/calculate.js"></script>
-                    
-
                 </div>
             </div>
         </div>
     </div>
     </div>
+    <!-- footer start -->
+    <div class="footer-dark" id="tm-section-4">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Contact</h3>
+                        <ul>
+                            <li>tel：(02)1234-5678</li>
+                            <li>email：12345678@gmail.com</li>
+                            <li>addres：ntut taipei taiwan</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Option Tech</h3>
+                        <p>We are from Taipai Tech student crew. We are developing on options and machine learning.</p>
+                    </div>     
+                <p class="copyright">Option Tech © 2021</p>
+            </div>
+        </footer>
+    </div>
+    <!-- footer end-->
     </div>
     <!-- container-fluid -->
     <!-- load JS files -->

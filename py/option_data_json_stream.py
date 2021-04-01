@@ -64,17 +64,14 @@ def get_week_name():
 def func_creat_data(index_num):
     for i in range(1):#取幾個月
         week_name, year_name, month_name=  get_week_name()
-        #year_name = str(get_week_name()[1])
-        #month_name = get_week_name()[2]
 
-        
         month_call = month_call_dict[int(month_name)]#call的月份代號
         month_put = month_put_dict[int(month_name)]#put的月份代號
         
         contracts_call=[]
         contracts_put=[]
         code_num=[]
-        
+        #每個月的第3周為月算日
         if week_name == 3:
             week_name = 'O'
    
@@ -92,7 +89,7 @@ def func_creat_data(index_num):
         
         #print(contracts_call)
               
-        #近月會沒有資料
+        #建立DataFrame和寫入json
         if len(contracts_call) != 0  and len(contracts_put) != 0:
             snapshots_call = api.snapshots(contracts_call)#擷取call data
             snapshots_put = api.snapshots(contracts_put)#擷取put data
@@ -142,9 +139,12 @@ def index_subscribe():
         #print(f"Topic: {topic}, Quote: {quote}")
         index_now = quote["Close"]#目前加權指數
         #print(index_now)
+        #以50為區間，四捨五入
         index_num = round(int(index_now),-1)
-        if index_num % 50 != 0 :
-            index_num = index_num - index_num % 50
+        if index_num % 50 >= 25:
+            index_num+=50-(index_num%50)
+        else:
+            index_num-=index_num%50
  
         df_index_data = pd.DataFrame([index_now,index_num])
         df_index_data.to_json (r"C:/xampp/htdocs/project/json/data_index.json")
@@ -189,7 +189,7 @@ time.sleep(10)
 while True:
     index_subscribe()#訂閱報價跟建立json
     func_creat_data(index_num)#建立資料庫並轉成.json格式
-    time.sleep(0.01)
+    time.sleep(0.01)#每0.01秒更新一次
 
 
 # In[ ]:

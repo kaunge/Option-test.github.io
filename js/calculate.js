@@ -554,23 +554,23 @@ function draw(x, y, bs_y, line_n) {
 
     if (day === 4) {//禮拜四則剩餘天數為4天
         lineChart.data.datasets[2].data = bs_y;
-        lineChart.data.datasets[2].label = 'remain 4 days';
+        lineChart.data.datasets[2].label = 'BS(remain 4 days)';
         document.getElementById('Standard Deviation(days)').innerHTML='Standard Deviation(4 days)';
     } else if (day === 5 || day === 6 || day === 0) {//禮拜五、六、日則剩餘天數為3天
         lineChart.data.datasets[2].data = bs_y;
-        lineChart.data.datasets[2].label = 'remain 3 days';
+        lineChart.data.datasets[2].label = 'BS(remain 3 days)';
         document.getElementById('Standard Deviation(days)').innerHTML='Standard Deviation(3 days)'
     } else if (day === 1) {//禮拜一則剩餘天數為2天
         lineChart.data.datasets[2].data = bs_y;
-        lineChart.data.datasets[2].label = 'remain 2 days';
+        lineChart.data.datasets[2].label = 'BS(remain 2 days)';
         document.getElementById('Standard Deviation(days)').innerHTML='Standard Deviation(2 days)'
     } else if (day === 2) {//禮拜二則剩餘天數為1天
         lineChart.data.datasets[2].data = bs_y;
-        lineChart.data.datasets[2].label = 'remain 1 day';
+        lineChart.data.datasets[2].label = 'BS(remain 1 day)';
         document.getElementById('Standard Deviation(days)').innerHTML='Standard Deviation(1 day)'
     } else if (day === 3) {//禮拜三則剩餘天數為0天
         lineChart.data.datasets[2].data = bs_y;
-        lineChart.data.datasets[2].label = 'bs=pro&los';
+        lineChart.data.datasets[2].label = 'BS(remain 0 day)';
         document.getElementById('Standard Deviation(days)').innerHTML='Standard Deviation(0 day)'
     }
 

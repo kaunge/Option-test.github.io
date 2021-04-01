@@ -168,3 +168,17 @@ function load_json_index() { //讀取data_index.json
 
             })
 }
+
+// function load_json_index() { //讀取ml_rf.json
+//     var url_ml_rf = "json/ml_rf.json";
+//     method: 'POST',
+//         fetch(url_ml_rf)
+//             .then(function (resp) {
+//                 return resp.json();
+//             })
+//             .then(function (data) {
+//                 //document.getElementById('strike').innerHTML = data[0][0];
+//                 //index_num = data[0][1];
+//                 console.log(data.columns)
+//             })
+// }
