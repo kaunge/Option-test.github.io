@@ -65,7 +65,7 @@ function get_week_name() {
     if (w == 3) {
         w = 'O'
     }
-
+    
     return [w, y, m];
 }
 //T字帳
@@ -105,11 +105,11 @@ function load_json_call(str) { //讀取data_call.json並建立表格
                         cell2.setAttribute("class", "codestrike");
 
 
-                        cell0.innerHTML = cell0.innerHTML + "<button id='bt_call_sell_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_call_sell_price_" + i.toString() + ")'>" + '-' + "</button>";
-                        cell1.innerHTML = cell1.innerHTML + "<button id='bt_call_buy_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_call_buy_price_" + i.toString() + ")'>" + '-' + "</button>";
+                        cell0.innerHTML = cell0.innerHTML + "<button id='bt_call_buy_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_call_buy_price_" + i.toString() + ")'>" + '-' + "</button>";
+                        cell1.innerHTML = cell1.innerHTML + "<button id='bt_call_sell_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_call_sell_price_" + i.toString() + ")'>" + '-' + "</button>";
                         cell2.innerHTML = cell2.innerHTML + "<font  color='white' border=1>" + 'strike' + "</font>";
-                        cell3.innerHTML = cell3.innerHTML + "<button id='bt_put_buy_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_put_buy_price_" + i.toString() + ")'>" + '-' + "</button>";
-                        cell4.innerHTML = cell4.innerHTML + "<button id='bt_put_sell_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_put_sell_price_" + i.toString() + ")'>" + '-' + "</button>";
+                        cell3.innerHTML = cell3.innerHTML + "<button id='bt_put_sell_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_put_sell_price_" + i.toString() + ")'>" + '-' + "</button>";
+                        cell4.innerHTML = cell4.innerHTML + "<button id='bt_put_buy_price_" + i.toString() + "' name='" + i.toString() + "' class='btn tm-light-blue-bordered-btn tm-news-link' onclick='contracts_content(bt_put_buy_price_" + i.toString() + ")'>" + '-' + "</button>";
                     }
 
                     for (var i = 0; i < row_len; i++) {

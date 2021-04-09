@@ -541,12 +541,6 @@ function draw(x, y, bs_y, line_n) {
         }
     }
 
-
-    
-
-    
-
-
     //draw(x, y, bs_y, line_n);
     //判斷今天是星期幾並依照剩餘天數把bs寫進去
     var now = new Date();
