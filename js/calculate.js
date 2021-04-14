@@ -308,13 +308,15 @@ function paint_x_2() {//描出將損益兩平點也考量後的X軸點位
     if (a.length > 0) {
         var max_a = Math.max.apply(null, a);
         var min_a = Math.min.apply(null, a);
+        var adj_max_a = max_a - max_a % 50;
+        var adj_min_a = min_a + (50 - min_a % 50);
     } else if (a.length === 0) {
-        var max_a = 0;
-        var min_a = 0;
+        var adj_max_a = 0;
+        var adj_min_a = 0;
     } else {
         console.log("描出X軸座標error");
     }
-    for (var i = min_a - 500; i < max_a + 501; i++) {
+    for (var i = adj_min_a - 500; i < adj_max_a + 501; i++) {
         x.push(i);
     }
 }
