@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>radar</title>
+	<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+	<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+	<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+	<button id=push onclick=load_json_ml()>push</button>
+	<div class="wrapper" style="max-width: 800px; margin: auto">
+		<canvas id="myChart_rf_1"></canvas>
+	</div>
+	<!-- read_json -->
+	<script>
+		function load_json_ml() {
+            var url = "/json/RF.json";
+            var request = new XMLHttpRequest();
+            request.open("get", url);
+            request.send(null);
+            request.onload = function () {
+                if (request.status == 200) {
+                    var json = JSON.parse(request.responseText);
+ 
+					lineChart_rf_1.data.labels = [];
+    			lineChart_rf_1.data.datasets[0].data = [];
+					var len_json=Object.keys(json).length; //宣告json長度
+					for(var i=0;i<Object.keys(json).length;i++){ //正常讀取json
+						console.log(json[i][0],json[i][1]);
+						lineChart_rf_1.data.labels.push(json[i][0]);
+						lineChart_rf_1.data.datasets[0].data.push(json[i][1]);
+					}
+					var diff = json[len_json-1][0]-json[0][0];//x軸差
+					var list_x=[];//x軸label
+					var list_y=[];//y軸data
+					var v = json[0][0];//json第一個x
+					var x1 = json[0][0] += 50 - (json[0][0] % 50);
+					var xn = json[len_json-1][0] -= json[len_json-1][0] % 50 -50;
+					var diff2 = xn - x1;
+					var x50 = diff2 / 50;
+					var list_x2=[];
+					var list_y2=[];
+					console.log(x1);
+					console.log(xn);
+					console.log(diff2);
+					console.log(x50);
+					// console.log(v);
+					// console.log(diff);
+					for(var i=0;i<diff;i++){
+						list_x.push(json[0][0]+i);//從json第一個x加到完
+						list_y.push(0);//y填入diff個零
+					}
+					for(var i=0;i<x50;i++){
+						// for(var j=0;j<50;j++){
+						// 	list_x2.push(x1 + i * 50);
+						// }
+						list_x2.push(x1 + i*50);
+					}
+					console.log(list_x2);
+					for(var i=0;i<len_json;i++){
+						for(var j=0;j<list_x.length;j++){
+							if(json[i][0]===list_x[j]){
+								//lineChart_rf_2.data.datasets[0].data.push(json[i][1]);
+								list_y[j]=json[i][1];//x有對應，y讀取
+							}else{
+								//lineChart_rf_2.data.datasets[0].data.push(null);
+								// list_y[i]=(json[i+1]-json[i][1])/list_x[i];
+							}
+						}
+					}
+					// console.log(list_y);
+					for(var i=0;i<x50;i++){
+						var sum = 0;
+						for(var j=0;j<50;j++){
+							sum += list_y[i*50+j];
+						}
+						list_y2.push(sum);
+					}
+					console.log(list_y2);
+					// console.log(list_x);
+					// console.log(list_y);
+					lineChart_rf_1.data.labels = list_x2;//讀取label(x軸)，將覆蓋正常讀取json迴圈
+					lineChart_rf_1.data.datasets[0].data = list_y2;//讀取data(y軸)，將覆蓋正常讀取json迴圈
+					lineChart_rf_1.update();//使線圖可以即時更新
+    			lineChart_rf_1.resize();//重設線圖
+                };
+            };
+		
+       }
+	</script>
+	<!-- line_rf_1 -->
+	<script>
+		//line_graph
+	//線圖
+	var line_x = [10000, 12000, 14000, 16000, 18000];
+	var line_n = [0,0,0,0,0];
+	let myChart_rf_1 = document.getElementById('myChart_rf_1').getContext('2d');
+	// Global Options
+	Chart.defaults.global.defaultFontFamily = 'Lato';
+	Chart.defaults.global.defaultFontSize = 18;
+	Chart.defaults.global.defaultFontColor = '#777';
+	//Chart.defaults.elements.bar.borderWidth = 1;
+	let lineChart_rf_1 = new Chart(myChart_rf_1, {
+		zoomEnabled: true,
+		type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+		data: {
+			labels: line_x, //x軸
+			datasets: [{
+				label: 'probability',
+				data: line_n, //y軸
+				backgroundColor:'rgba(0, 102, 153, 0.5)',
+				
+				//fillColor:'rgba(238, 36, 36, 1)',
+				//strokeColor:'rgba(100, 102, 153, 0.5)',
+				borderColor: '#006699',
+				borderWidth: 1,
+				//pointHitRadius: 0.05,
+				//pointRadius: 0.05,
+				//bar
+		}]
+		},
+		options: {
+			title: {
+				display: true,
+				text: 'ML_RF', //圖表標頭
+				fontSize: 20
+			},
+			legend: {
+				display: false,
+				position: 'bottom',
+				labels: {
+					//filter: function(lineChart.data.datasets[6], myChart) {
+					// Logic to remove a particular legend item goes here
+					//return !lineChart.data.datasets[6].text.includes('bs_5_day');
+					//}
+					fontColor: 'black' //說明文字
+				},
+			},
+			layout: {
+				padding: {
+					left: 0,
+					right: 0,
+					bottom: 0,
+					top: 0,
+				}
+			},
+			tooltips: {
+				enabled: true
+			},
+			scales: {
+				xAxes: [{ //x軸
+					id: 'strike',
+					display:true,
+					scaleLabel:{
+						display:true,
+						labelString:'strike'
+					},
+					ticks: {
+						autoSkip: true,
+						maxTicksLimit: 7,
+						stepSize: 500,//值的標籤為每50一個
+						callback: function (value, index, values) {
+							var first = (value / 1000 - ((value % 1000) / 1000))
+							var valueplus = ',' + (value - first * 1000)
+							var test = value.toString();
+							return test; //標籤增加符號
+						}
+					},
+				}],
+				yAxes: [{ //y軸
+					id: 'probability',
+					display:true,
+					scaleLabel:{
+						display:true,
+						labelString:'probability'
+					},
+					tick: {
+						stepSize: 500,
+						callback: function (value, index, values) {
+							return '$' + value; //標籤增加符號
+						}
+					},
+				}]
+			}
+		}
+	});
+	window.addEventListener('resize', function () {
+		lineChart_rf_1.resize();
+	})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>chartjs annotation linear</title>
+</head>
+
+<body translate="no">
+
+    <div style="width: 50%">
+        <canvas id="canvas"></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+    <script>
+
+        function kelly() {
+            var odds = [-1, 1, 2];
+            var pwin = [1 / 2, 1 / 3, 1 / 6];
+            var PL = [];
+            for (var i = 0; i <= 1; i += 0.01) {
+                var a = 1;
+                for (var j = 0; j < odds.length; j++) {
+                    a *= Math.pow(1 + odds[j] * i, pwin[j]);
+                }
+                PL.push(a);
+            }
+            var list_kellyx = []
+            for (var i = 0; i < PL.length; i++) {
+                list_kellyx.push(i + 1);
+            }
+            console.log(list_kellyx);
+            var optf = PL.indexOf(Math.max.apply(null, PL));
+            return [PL, list_kellyx, optf];
+        }
+        var kelly_values = kelly();
+        var PL = kelly_values[0];
+        var list_kellyx = kelly_values[1];
+        var optf = kelly_values[2];
+
+        console.log(PL);
+        console.log(list_kellyx);
+        console.log(optf);
+        var x = [10, 20, 30, 40, 50];
+        var y = [10, 20, 10, 40, 10];
+
+
+        var lineChart = document.getElementById("canvas").getContext("2d");
+        let lineChart_k = new Chart(lineChart, {
+            type: "line",
+            data: {
+                labels: x, //x軸
+                datasets: [{
+                    label: 'probability',
+                    data: y, //y軸
+                    backgroundColor: 'rgba(0, 0, 0,0)',
+                    borderColor: '#006699',
+                    borderWidth: 0,
+                    pointHitRadius: 5,
+                    pointRadius: 0,
+                    borderWidth: 5,
+                }]
+            },
+            options: {
+                annotation: {
+                    annotations: [
+                        {
+                            //drawTime: "afterDatasetsDraw",
+                            type: "line",
+                            mode: "vertical",
+                            scaleID: "x-axis-0",
+                            value: optf,
+                            borderWidth: 2,
+                            borderColor: "red",
+                            label: {
+                                content: "optf=" + optf.toString() + '%',
+                                enabled: true,
+                                position: "top"
+                            },
+
+                        }, {
+                            //drawTime: "afterDatasetsDraw",
+                            type: "line",
+                            mode: "horizontal",
+                            scaleID: "y-axis-0",
+                            value: 1,
+                            borderWidth: 2,
+                            borderColor: "green",
+                            label: {
+                                content: "optf",
+                                enabled: false,
+                                position: "top"
+                            }
+                        }
+
+                    ]
+                }, title: {
+                    display: true,
+                    text: 'Kelly', //圖表標頭
+                    fontSize: 10
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: true
+                },
+                scales: {
+                    xAxes: [{ //x軸
+                        id: 'x-axis-0',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'optf%'
+                        }
+                    }], yAxes: [{ //y軸
+                        id: 'y-axis-0',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'PL'
+                        },
+
+                    }]
+                },
+            }
+        });
+        function plot_kelly(PL, list_kellyx) {
+            //lineChart_rf_1.data.labels = [];
+            //lineChart_rf_1.data.datasets[0].data = [];
+            lineChart_k.data.labels = list_kellyx;//讀取label(x軸)，將覆蓋正常讀取json迴圈
+            lineChart_k.data.datasets[0].data = PL;//讀取data(y軸)，將覆蓋正常讀取json迴圈
+            lineChart_k.update();//使線圖可以即時更新
+            lineChart_k.resize();//重設線圖
+            console.log(PL);
+
+            return 0;
+        }
+        plot_kelly(PL, list_kellyx);
+
+
+
+        window.addEventListener('resize', function () {
+            lineChart_k.resize();
+        })
+    </script>
+</body>
+
+</html>
