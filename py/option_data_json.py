@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 #LOGIN
@@ -21,6 +21,7 @@ def login():
     person_id="C121516999", 
     passwd="jeinjin123", 
     contracts_cb=lambda security_type: print(f"{repr(security_type)} fetch done."))
+    
 
 #取得當周數跟年月日
 def get_week_name():
@@ -39,34 +40,33 @@ def get_week_name():
         p = (this_month_start + timedelta(days=i)).strftime('%Y-%m-%d')
         pp = datetime.strptime(str(p), '%Y-%m-%d')
         one = pp.isoweekday()
-        if one == 4:#如果是周三就加入陣列
+        if one == 3:#如果是周三就加入陣列#attention
             d2 = pp.strftime('%Y-%m-%d')
             date_list.append(d2)
    
     #依照各星期三減今天的天數來判斷今天為當月第幾週
+    
     w= 0
     for i in range(len(date_list)):
-        diff = (datetime.strptime(date_list[i],'%Y-%m-%d')-now ).days
+        diff = (datetime.strptime(date_list[i],'%Y-%m-%d')-now ).days+1
         if diff >=0 and diff<7:
             w = i+1
             y=now.strftime('%Y')
             m=now.strftime('%m')
+            
         elif diff <0 and diff >= -7:
+            now = datetime.now()
             w = 1          
             y = (now+timedelta(days=7)).strftime('%Y')
             m = (now+timedelta(days=7)).strftime('%m')
             
         elif diff >7:
-            continue
-            
+            continue         
     return w,  str(y), int(m)
 
 def func_creat_data(index_num):
     for i in range(1):#取幾個月
         week_name, year_name, month_name=  get_week_name()
-        #year_name = str(get_week_name()[1])
-        #month_name = get_week_name()[2]
-
         
         month_call = month_call_dict[int(month_name)]#call的月份代號
         month_put = month_put_dict[int(month_name)]#put的月份代號
@@ -79,8 +79,8 @@ def func_creat_data(index_num):
             week_name = 'O'
    
         #取得所有的報價
-        for i in range(30):
-            index_name = str(int(index_num)-500+i*50)#點數總攬
+        for i in range(32):
+            index_name = str(int(index_num)-800+i*50)#點數總攬
             code_name_call = 'TX'+str(week_name)+str(index_name)+month_call+year_name[3]#call代號
             code_name_put = 'TX'+str(week_name)+str(index_name)+month_put+year_name[3]#put代號
             if api.Contracts.Options[code_name_call] is not None and api.Contracts.Options[code_name_put] is not None:
@@ -134,31 +134,12 @@ def func_creat_data(index_num):
             pass
 #訂閱報價
 def index_subscribe():
-#     week_name, year_name, month_name=  get_week_name()
-#     print(week_name, year_name, month_name)
-    
-#     if int(month_name)+1 > 12:
-#         month_name = 1
-#         year_name = str(int(year_name)+1)
-        
-    
-#     #api.quote.subscribe(api.Contracts.Options[("TX"+str(week_name)+str(15800)+month_call_dict[int(month_name)]+year_name[3])], quote_type=sj.constant.QuoteType.BidAsk)
-#     #api.quote.subscribe(api.Contracts.Options["TXO15800B1"], quote_type=sj.constant.QuoteType.BidAsk)
-#     api.quote.subscribe(api.Contracts.Indexs.TSE.TSE001, quote_type=sj.constant.QuoteType.BidAsk)
-    
-#     @api.quote.on_quote
-#     def quote_callback(topic: str, quote: dict):
-#         #print(f"Topic: {topic}, Quote: {quote}")
-#         global index_now, index_num, df_index_data
-        
-#         index_now = quote["TargetKindPrice"]#目前加權指數
     api.quote.subscribe(api.Contracts.Indexs.TSE.TSE001, quote_type='tick')  
     @api.quote.on_quote
     def quote_callback(topic: str, quote: dict):
         #print(f"Topic: {topic}, Quote: {quote}")
+        global index_now, index_num
         index_now = quote["Close"]#目前加權指數
-        #print(index_now)
-      
         
         index_num = round(int(index_now),-1)
         if index_num % 50 >= 25:
@@ -166,7 +147,6 @@ def index_subscribe():
         else:
             index_num-=index_num%50
  
-
         df_index_data = pd.DataFrame([index_now,index_num])
         df_index_data.to_json (r"C:/xampp/htdocs/project/json/data_index.json")
         '''
@@ -188,8 +168,8 @@ from datetime import datetime, date,timedelta
 import calendar
 
 api=0#登入用
-index_now = 0#目前加權指數
-index_num = 15800#50級距加權指數
+index_now=pd.read_json("C:/xampp/htdocs/project/json/data_index.json")[0][1]#目前加權指數
+index_num = pd.read_json("C:/xampp/htdocs/project/json/data_index.json")[0][1]#50級距加權指數
 table_call_name ="" #資料庫裡的call table
 table_put_name = ""#資料庫裡的put table
 
@@ -209,7 +189,7 @@ login()#登入
 time.sleep(10)
 index_subscribe()#訂閱報價跟建立json
 func_creat_data(index_num)#建立資料庫並轉成.json格式
-time.sleep(0.01)
+time.sleep(1)
 
 
 # In[ ]:
