@@ -107,9 +107,9 @@ function removeSelectedRow(delobject) {
     }
     
     if (contracts_array.length == 0) { //如果單子表格為0則將損益表格恢復原狀
-        document.getElementById('pro_los_0').innerHTML = "<font size='2' color='green'>risk</font>";
-        document.getElementById('pro_los_1').innerHTML = "<font size='2' color='red'>benefit</font>";
-        document.getElementById('pro_los_2').innerHTML = "<font size='2' color='black'>balance</font>";
+        document.getElementById('pro_los_0').innerHTML = "<font size='2' color='green'>loss</font>";
+        document.getElementById('pro_los_1').innerHTML = "<font size='2' color='red'>profit</font>";
+        document.getElementById('pro_los_2').innerHTML = "<font size='2' color='black'>break-even point</font>";
     }
     func_calculate(contracts_array); //教練跟涂				
 }
@@ -128,9 +128,9 @@ function ClearAll(contracts_array) {
     k = document.getElementById("tbody_contracts").rows.length; //讓k回歸0
 
     if (contracts_array.length == 0) { //如果單子表格為0則將損益表格恢復原狀
-        document.getElementById('pro_los_0').innerHTML = "<font size='2' color='green'>risk</font>";
-        document.getElementById('pro_los_1').innerHTML = "<font size='2' color='red'>benefit</font>";
-        document.getElementById('pro_los_2').innerHTML = "<font size='2' color='black'>balance</font>";
+        document.getElementById('pro_los_0').innerHTML = "<font size='2' color='green'>loss</font>";
+        document.getElementById('pro_los_1').innerHTML = "<font size='2' color='red'>profit</font>";
+        document.getElementById('pro_los_2').innerHTML = "<font size='2' color='black'>break-even point</font>";
     }
     func_calculate(contracts_array); //教練跟涂															
 }
@@ -509,15 +509,29 @@ function profit_and_loss_cap() { //id=pro_los_0 & id=pro_los_1，risk&profit表�
     }
 
 }
+function kelly() {
+    var odds=[-1,1,2];
+    var pwin=[1/2,1/3,1/6];
+    var PL=[];
+    for (var i = 0; i <= 1; i+=0.01){
+        var a = 1;
+        for (var j = 0; j < odds.length; j++){
+            a *= Math.pow(1+odds[j]*i, pwin[j]);
+        }
+        PL.push(a);
+    }
+    return PL;
+}
 
 //涂
 function draw(x, y, bs_y, line_n) {
+    
     lineChart.data.labels = [];
     lineChart.data.datasets[0].data = [];
     lineChart.data.datasets[1].data = [];
     lineChart.data.datasets[2].data = [];
     lineChart.data.labels = x;
-
+   
     lineChart_n.data.labels = [];
     lineChart_n.data.datasets[0].data = [];
     lineChart_n.data.datasets[1].data = [];
@@ -542,12 +556,12 @@ function draw(x, y, bs_y, line_n) {
             lineChart_n.data.datasets[1].data.push(line_n[i]);
         }
     }
-
+    load_json_ml(x);
+    
     //draw(x, y, bs_y, line_n);
     //判斷今天是星期幾並依照剩餘天數把bs寫進去
     var now = new Date();
     var day = now.getDay();
-
     if (day === 4) {//禮拜四則剩餘天數為4天
         lineChart.data.datasets[2].data = bs_y;
         lineChart.data.datasets[2].label = 'BS(remain 4 days)';
@@ -575,6 +589,9 @@ function draw(x, y, bs_y, line_n) {
 
     lineChart_n.update();//使線圖可以即時更新
     lineChart_n.resize();//重設線圖
+
+    lineChart_rf_1.update();//使線圖可以即時更新
+    lineChart_rf_1.resize();//重設線圖
 }
 
 function pdf(x, mean, std) {//計算機率密度函數      
@@ -788,7 +805,8 @@ function func_calculate(contracts_array) { //計算教練程式main
         // bs_y_5_day.push(cash_in + bs_cash_out(x[i], 5/365)); //計算5天後到期的BS模型下進出場後總共的資金變化
     }
 
-
+    var PL = kelly();
+    var optf = PL.indexOf(Math.max.apply(null, PL));
 
     console.log(contracts_array);
     //console.log('x=', x);
@@ -796,9 +814,9 @@ function func_calculate(contracts_array) { //計算教練程式main
     //console.log('bs_y=', bs_y);
 
     //重設balane表格內容
-    document.getElementById('pro_los_0').innerHTML = "<font size='2' color='green'>risk</font>";
-    document.getElementById('pro_los_1').innerHTML = "<font size='2' color='red'>benefit</font>";
-    document.getElementById('pro_los_2').innerHTML = "<font size='2' color='black'>balance</font>";
+    document.getElementById('pro_los_0').innerHTML = "<font size='2' color='green'>loss</font>";
+    document.getElementById('pro_los_1').innerHTML = "<font size='2' color='red'>profit</font>";
+    document.getElementById('pro_los_2').innerHTML = "<font size='2' color='black'>break-even point</font>";
 
     //如果單子無內容則復原，否則作動
     if (contracts_array.length === 0) {
@@ -809,15 +827,6 @@ function func_calculate(contracts_array) { //計算教練程式main
         line_n = [0, 0, 0, 0, 0];//normal distrubution
         draw(x, y, bs_y, line_n);
         document.getElementById('exp').innerHTML='exp_value';
-        // bs_y_1_day = [null, null, null, null, null];
-        // bs_y_2_day = [null, null, null, null, null];
-        // bs_y_3_day = [null, null, null, null, null];
-        // bs_y_4_day = [null, null, null, null, null];
-        // bs_y_5_day = [null, null, null, null, null];
-        //draw(x, y, bs_y); //畫線圖
-        //draw(x, y, bs_y_1_day, bs_y_2_day, bs_y_3_day, bs_y_4_day, bs_y_5_day); //畫線圖
-
-
     } else {
         //func_balance();
         //balance_point();//計算所有損益兩平時的X座標
