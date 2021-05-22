@@ -143,6 +143,8 @@ function refresh_tbody_contracts() {
             document.getElementById("tbody_contracts").rows[i].cells[4].innerText = contracts_array[i][4];
         }
     }
+    console.log('refresh_tbody_contracts',contracts_array);
+    func_calculate(contracts_array);
 }
 
 
@@ -678,7 +680,7 @@ function func_std(){
 var mytime = setInterval('myTimer()', 1000);
 func_month();
 func_std();//計算標準差
-setInterval('load_json_call()', 100); //反覆讀json
+setInterval('load_json_call()', 1000); //反覆讀json
 setInterval('refresh_tbody_contracts(contracts_array)', 1000);//刷新右方清單按鈕
 
 var option_type = "";
